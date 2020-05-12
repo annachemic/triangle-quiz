@@ -5,23 +5,31 @@ import ru.annachemic.natera.rest.RestMethods;
 
 public class TriangleDataProvider {
     @DataProvider
-    public Object[][] triangleSeparatorTests() {
+    public static Object[][] getNewTrianglesList() {
+        RestMethods.getNewTriangleId();
         return new Object[][]{
-                {";", "3;4;5", 200},
-                {",", "3,4,5", 200},
-                {" ", "3 4 5", 200},
-                {"", "3;4;5", 200},
-                {null, "3;4;5", 200},
-                {"; ", "3;4;5", 200},
-                {".", "3.4.5", 422}
+                {RestMethods.getAllTringlesIds(RestMethods.getAllTrianglesInfo())}
         };
     }
 
+    @DataProvider
+    public Object[][] triangleSeparatorPositiveTests() {
+        return new Object[][]{
+                {";", "3;4;5"},
+                {",", "3,4,5"},
+                {" ", "3 4 5"},
+                {"", "6;8;10", 200},
+                {null, "3;4;5"},
+                {"; ", "3; 4; 5"},
+        };
+    }
 
     @DataProvider
-    public static Object[][] getTrianglesList() {
+    public Object[][] triangleSeparatorNegativeTests() {
         return new Object[][]{
-                {RestMethods.getAllTringlesIds(RestMethods.getAllTrianglesInfo())}
+                {"", "6;8;10"},
+                {"", "6810"},
+                {".", "3.4.5"}
         };
     }
 }
