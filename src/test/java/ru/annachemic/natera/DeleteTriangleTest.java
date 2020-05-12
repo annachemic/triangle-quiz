@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.annachemic.natera.rest.RestMethods;
-import ru.annachemic.natera.utils.ConfigUtils;
 
 import java.util.List;
 
@@ -15,11 +14,10 @@ import static ru.annachemic.natera.rest.RestMethods.getAllTringlesIds;
 
 @Slf4j
 public class DeleteTriangleTest {
-    String userKey;
 
     @BeforeMethod
     public void setUp() {
-        userKey = ConfigUtils.getUserToken();
+
     }
 
 
@@ -52,7 +50,7 @@ public class DeleteTriangleTest {
     @Test
     public void deleteTriangleWithEmptyId() {
         List<String> idListBeforeDeletion = getAllTringlesIds(getAllTrianglesInfo());
-        RestMethods.deleteATriangle("", userKey, 405);
+        RestMethods.deleteATriangle("", 405);
         List<String> idListAfterDeletion = getAllTringlesIds(getAllTrianglesInfo());
         assertThat(idListAfterDeletion).isEqualTo(idListBeforeDeletion);
     }

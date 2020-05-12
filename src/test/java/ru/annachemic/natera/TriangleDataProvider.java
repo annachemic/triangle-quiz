@@ -1,7 +1,10 @@
 package ru.annachemic.natera;
 
 import org.testng.annotations.DataProvider;
+import ru.annachemic.natera.dto.response.TriangleDtoResponse;
 import ru.annachemic.natera.rest.RestMethods;
+
+import java.util.List;
 
 public class TriangleDataProvider {
     @DataProvider
@@ -18,7 +21,6 @@ public class TriangleDataProvider {
                 {";", "3;4;5"},
                 {",", "3,4,5"},
                 {" ", "3 4 5"},
-                {"", "6;8;10", 200},
                 {null, "3;4;5"},
                 {"; ", "3; 4; 5"},
         };
@@ -30,6 +32,75 @@ public class TriangleDataProvider {
                 {"", "6;8;10"},
                 {"", "6810"},
                 {".", "3.4.5"}
+        };
+    }
+
+    @DataProvider
+    public Object[][] triangleWithDoubleSidesTest() {
+        return new Object[][]{
+                {";", "3.0;4;5"},
+                {";", "3;4.3;6"},
+                {";", "3;4;5.2"},
+                {";", "3;4.1678;5.25"},
+                {";", "3.2222222;4.1678;7"},
+                {";", "3.0000000004;4;5.002"},
+                {";", "0.03;0.04;0.05"},
+
+        };
+    }
+
+    @DataProvider
+    public Object[][] triangleSidesNegativeTests() {
+        return new Object[][]{
+                {";", "1;-2;2.5"},
+                {";", "-3;4;5"},
+                {";", "3;4;-5"},
+                {";", "0;0.04;0.05"},
+                {";", "0.3;0;0.05"},
+                {";", "0.3;0.4;0"},
+                {";", "0;0;0"},
+                {";", "0;0;0.1"},
+                {";", "1;0;0"},
+                {";", "0;2;0"},
+                {";", "null;4;5"},
+                {";", "3;null;5"},
+                {";", "3;4;null"},
+                {";", ";4;5"},
+                {";", "3;;5"},
+                {";", "3;4;"},
+                {";", "34;5"},
+                {";", "345"},
+                {";", ""},
+                {";", "null"},
+        };
+    }
+
+    @DataProvider
+    public Object[][] triangleCreator() {
+        RestMethods.deleteAllTriangles();
+        List<TriangleDtoResponse> list = RestMethods.getAllTrianglesInfo();
+        if (list.size() == 0)
+            list.add(RestMethods.createATriangle(5.5, 4.4, 7.0));
+        return new Object[][]{
+                {list}
+        };
+    }
+
+    @DataProvider
+    public Object[][] triangleNegativeCreator() {
+        RestMethods.deleteAllTriangles();
+        List<TriangleDtoResponse> list = RestMethods.getAllTrianglesInfo();
+        if (list.size() == 0)
+            list.add(RestMethods.createATriangle(-5.5, -4.4, 7.0));
+        list.add(RestMethods.createATriangle(-5.5, -4.4, -7.0));
+        list.add(RestMethods.createATriangle(0.0, 0.0, 0.0));
+        list.add(RestMethods.createATriangle(5.5, 6.0, 0.0));
+
+        return new Object[][]{
+                {list.get(0)},
+                {list.get(1)},
+                {list.get(2)},
+                {list.get(3)}
         };
     }
 }

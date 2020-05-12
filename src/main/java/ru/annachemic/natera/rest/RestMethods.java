@@ -76,6 +76,11 @@ public class RestMethods {
         return createATriangle(null, INPUT).body();
     }
 
+    public static TriangleDtoResponse createATriangle(Double firstSide, Double secondSide, Double thirdSide) {
+        String input = firstSide.toString() + ";" + secondSide.toString() + ";" + thirdSide.toString();
+        return createATriangle(null, input).body();
+    }
+
 
     public static String getNewTriangleId() {
         return createATriangle(null, INPUT, ConfigUtils.getUserToken()).body().getId().toString();
