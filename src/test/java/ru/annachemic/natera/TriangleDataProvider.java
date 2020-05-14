@@ -1,10 +1,12 @@
 package ru.annachemic.natera;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.DataProvider;
 import ru.annachemic.natera.dto.response.TriangleDtoResponse;
 import ru.annachemic.natera.rest.RestMethods;
 
 import java.util.List;
+import java.util.UUID;
 
 public class TriangleDataProvider {
     @DataProvider
@@ -101,6 +103,18 @@ public class TriangleDataProvider {
                 {list.get(1)},
                 {list.get(2)},
                 {list.get(3)}
+        };
+    }
+
+    @DataProvider
+    public Object[][] generateNegativeTriangleId() {
+        return new Object[][]{
+                {UUID.randomUUID().toString(), 404},
+                {"5678", 404},
+                {"5678.0001", 404},
+                {RandomStringUtils.randomAlphabetic(1, 18), 404},
+                {" ", 404},
+                {"", 405},
         };
     }
 }

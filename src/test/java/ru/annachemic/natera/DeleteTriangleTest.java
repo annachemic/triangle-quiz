@@ -2,7 +2,6 @@ package ru.annachemic.natera;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.annachemic.natera.rest.RestMethods;
 
@@ -15,16 +14,11 @@ import static ru.annachemic.natera.rest.RestMethods.getAllTringlesIds;
 @Slf4j
 public class DeleteTriangleTest {
 
-    @BeforeMethod
-    public void setUp() {
-
-    }
-
 
     @Test(dataProviderClass = TriangleDataProvider.class, dataProvider = "getNewTrianglesList")
     @SneakyThrows
     public void deleteTriangleTest(List<String> triangleIdList) {
-        Integer beforeListSize = triangleIdList.size();
+        int beforeListSize = triangleIdList.size();
         RestMethods.deleteATriangle(triangleIdList.get(0), 200);
 
         List<String> idListAfterDeletion = getAllTringlesIds(getAllTrianglesInfo());
