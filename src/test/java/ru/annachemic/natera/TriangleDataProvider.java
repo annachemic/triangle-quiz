@@ -117,4 +117,39 @@ public class TriangleDataProvider {
                 {"", 405},
         };
     }
+
+    @DataProvider
+    public Object[][] triangleForAreaPositiveCreator() {
+        RestMethods.deleteAllTriangles();
+        return new Object[][]{
+                {RestMethods.createATriangle(5.5, 4.4, 7.0)},
+                {RestMethods.createATriangle(0.0, 4.4, 7.0)},
+                {RestMethods.createATriangle(-5.0, 4.4, 7.0)},
+                {RestMethods.createATriangle(-5.0, -4.4, 7.0)},
+                {RestMethods.createATriangle(-5.0, -4.4, -7.0)},
+        };
+    }
+
+
+    @DataProvider
+    public Object[][] triangleForAreaNegativeCreator() {
+        return new Object[][]{
+                {RestMethods.createATriangle(0.0, 4.4, 7.0)},
+                {RestMethods.createATriangle(-5.0, 4.4, 7.0)},
+                {RestMethods.createATriangle(-5.0, -4.4, 7.0)},
+                {RestMethods.createATriangle(-5.0, -4.4, -7.0)},
+        };
+    }
+
+    @DataProvider
+    public Object[][] nonExistentTriangles() {
+        return new Object[][]{
+                {UUID.randomUUID().toString(), 404},
+                {RandomStringUtils.randomAlphabetic(1, 18), 404},
+                {String.valueOf(Math.random()), 404},
+                {String.valueOf(Math.round(Math.random() * 10000)), 404},
+                {"", 404},
+                {" ", 404}
+        };
+    }
 }

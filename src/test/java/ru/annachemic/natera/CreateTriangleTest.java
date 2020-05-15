@@ -62,6 +62,7 @@ public class CreateTriangleTest {
         checkDefaultErrorStep(response, 401);
     }
 
+
     @AfterMethod
     public void tearDown() {
         if (StringUtils.isNotBlank(createdTriangleId))

@@ -2,8 +2,8 @@ package ru.annachemic.natera;
 
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import retrofit2.Response;
 import ru.annachemic.natera.dto.response.TriangleDtoResponse;
@@ -28,7 +28,7 @@ public class GetTriangleInfoTests {
     String userKey;
 
     @SneakyThrows
-    @BeforeMethod
+    @BeforeClass
     public void setUp() {
         triangle = createATriangle();
         triangleId = triangle.getId().toString();
@@ -92,7 +92,7 @@ public class GetTriangleInfoTests {
         checkDefaultErrorStep(response, 401);
     }
 
-    @AfterMethod
+    @AfterClass
     public void tearDown() {
         deleteATriangle(triangle.getId().toString(), 200);
     }

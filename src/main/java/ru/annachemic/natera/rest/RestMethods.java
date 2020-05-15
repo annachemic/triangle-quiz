@@ -90,8 +90,19 @@ public class RestMethods {
     public static void deleteAllTriangles() {
         List<String> triangleList = getAllTringlesIds(getAllTrianglesInfo());
         for (int i = 0; i < triangleList.size(); i++) {
-            deleteATriangle(triangleList.get(0), 200);
+            deleteATriangle(triangleList.get(i), 200);
         }
+    }
+
+    public static void createTriangles(Integer amount) {
+        if (amount <= 0) log.info("The amount should be more than 0 and less than 10");
+        else {
+            for (int i = 0; i < amount; i++) {
+                createATriangle();
+            }
+            log.info(String.valueOf(getAllTrianglesInfo().size()));
+        }
+
     }
 
 }

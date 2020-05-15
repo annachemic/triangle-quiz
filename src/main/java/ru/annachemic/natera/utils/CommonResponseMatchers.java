@@ -7,7 +7,7 @@ import okhttp3.ResponseBody;
 import org.assertj.core.api.Condition;
 import retrofit2.Response;
 import ru.annachemic.natera.dto.response.ErrorDto;
-import ru.annachemic.natera.dto.response.PerimeterDto;
+import ru.annachemic.natera.dto.response.ResultDto;
 import ru.annachemic.natera.dto.response.TriangleDtoResponse;
 
 import static java.util.Objects.isNull;
@@ -15,6 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 public class CommonResponseMatchers {
+    static Gson g = new Gson();
     @SneakyThrows
     public static void checkStatusCodeStep(Response<?> response, int expectedCode) {
         assertThat(response.code()).isEqualTo(expectedCode);
@@ -32,7 +33,7 @@ public class CommonResponseMatchers {
         return response.body();
     }
 
-    public static void checkPerimeterStep(Response<PerimeterDto> response, TriangleDtoResponse triangle) {
+    public static void checkPerimeterStep(Response<ResultDto> response, TriangleDtoResponse triangle) {
         Double result = response.body().getResult();
         assertThat(result).isEqualTo(
                 triangle.getFirstSide() + triangle.getSecondSide() + triangle.getThirdSide());
@@ -44,10 +45,23 @@ public class CommonResponseMatchers {
         checkStatusCodeStep(response, code);
         ResponseBody responseBody = response.errorBody();
         assertThat(responseBody).isNotNull();
-        Gson g = new Gson();
+
         ErrorDto errorDto = g.fromJson(responseBody.string(), ErrorDto.class);
         assertThat(errorDto.getStatus()).isEqualTo(code);
         log.info("Occurred error: " + errorDto.getError() + " with status code " + errorDto.getStatus() + " at " + DateUtils.formatDate(errorDto.getTimestamp()));
+    }
+
+    public static void checkArea(TriangleDtoResponse triangle, Double responseResult) {
+        assertThat(responseResult).isEqualTo(calculateArea(triangle))
+                .as("The area has been calculated successfully");
+    }
+
+    public static Double calculateArea(TriangleDtoResponse triangle) {
+        Double a = triangle.getFirstSide();
+        Double b = triangle.getSecondSide();
+        Double c = triangle.getThirdSide();
+        Double p = (a + b + c) / 2;
+        return Math.sqrt(p * (p - a) * (p - b) * (p - c));
     }
 
 }

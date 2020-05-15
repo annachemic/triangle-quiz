@@ -3,6 +3,6 @@ package ru.annachemic.natera.dto.response;
 import lombok.Data;
 
 @Data
-public class PerimeterDto {
+public class ResultDto {
     Double result;
 }
