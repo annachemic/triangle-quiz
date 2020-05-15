@@ -13,7 +13,7 @@ public class BasicTest {
 
     @BeforeMethod
     public void setUp() {
-//        deleteAllTriangles();
+        deleteAllTriangles();
 
     }
 
@@ -24,6 +24,7 @@ public class BasicTest {
                 createATriangle(null, "6;8;10");
         CommonResponseMatchers.checkDefaultErrorStep(response, 422);
     }
+
 
     @AfterMethod
     public void tearDown() {

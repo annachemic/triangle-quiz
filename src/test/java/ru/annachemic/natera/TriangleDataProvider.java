@@ -54,13 +54,14 @@ public class TriangleDataProvider {
     @DataProvider
     public Object[][] triangleSidesNegativeTests() {
         return new Object[][]{
+                {";", "0;0;0"},
                 {";", "1;-2;2.5"},
+                {";", "1;2;4"},
                 {";", "-3;4;5"},
                 {";", "3;4;-5"},
                 {";", "0;0.04;0.05"},
                 {";", "0.3;0;0.05"},
                 {";", "0.3;0.4;0"},
-                {";", "0;0;0"},
                 {";", "0;0;0.1"},
                 {";", "1;0;0"},
                 {";", "0;2;0"},
@@ -96,13 +97,11 @@ public class TriangleDataProvider {
             list.add(RestMethods.createATriangle(-5.5, -4.4, 7.0));
         list.add(RestMethods.createATriangle(-5.5, -4.4, -7.0));
         list.add(RestMethods.createATriangle(0.0, 0.0, 0.0));
-        list.add(RestMethods.createATriangle(5.5, 6.0, 0.0));
 
         return new Object[][]{
                 {list.get(0)},
                 {list.get(1)},
-                {list.get(2)},
-                {list.get(3)}
+                {list.get(2)}
         };
     }
 
@@ -123,7 +122,7 @@ public class TriangleDataProvider {
         RestMethods.deleteAllTriangles();
         return new Object[][]{
                 {RestMethods.createATriangle(5.5, 4.4, 7.0)},
-                {RestMethods.createATriangle(0.0, 4.4, 7.0)},
+                {RestMethods.createATriangle(0.0, 0.0, 0.0)},
                 {RestMethods.createATriangle(-5.0, 4.4, 7.0)},
                 {RestMethods.createATriangle(-5.0, -4.4, 7.0)},
                 {RestMethods.createATriangle(-5.0, -4.4, -7.0)},
@@ -134,7 +133,7 @@ public class TriangleDataProvider {
     @DataProvider
     public Object[][] triangleForAreaNegativeCreator() {
         return new Object[][]{
-                {RestMethods.createATriangle(0.0, 4.4, 7.0)},
+                {RestMethods.createATriangle(0.0, 0.0, 0.0)},
                 {RestMethods.createATriangle(-5.0, 4.4, 7.0)},
                 {RestMethods.createATriangle(-5.0, -4.4, 7.0)},
                 {RestMethods.createATriangle(-5.0, -4.4, -7.0)},
@@ -152,4 +151,5 @@ public class TriangleDataProvider {
                 {" ", 404}
         };
     }
+
 }

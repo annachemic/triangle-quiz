@@ -12,6 +12,8 @@ import ru.annachemic.natera.services.GetAreaService;
 import ru.annachemic.natera.utils.ConfigUtils;
 import ru.annachemic.natera.utils.RetrofitUtils;
 
+import java.util.Objects;
+
 import static ru.annachemic.natera.rest.RestMethods.getNewTriangleId;
 import static ru.annachemic.natera.utils.CommonResponseMatchers.*;
 
@@ -39,12 +41,13 @@ public class GetAreaTest {
 
         checkNotEmptyBodyStep(response);
         checkStatusCodeStep(response, 200);
-        checkArea(triangle, response.body().getResult());
+        checkArea(triangle, Objects.requireNonNull(response.body().getResult()));
     }
 
     @Test(dataProviderClass = TriangleDataProvider.class, dataProvider = "triangleForAreaNegativeCreator")
     @SneakyThrows
-    public void getTriangleAreaWithIncorrectSideValuesTest(TriangleDtoResponse triangle) {
+    public void getTriangleAreaWithNegativeSideValuesTest(TriangleDtoResponse triangle) {
+        String triangleId = triangle.getId().toString();
         retrofit2.Response<ResultDto> response =
                 getAreaService.getTriangleArea(
                         triangleId, ConfigUtils.getUserToken())
@@ -52,8 +55,8 @@ public class GetAreaTest {
 
         checkDefaultErrorStep(response, 422);
         checkStatusCodeStep(response, 422);
-
     }
+
 
     @Test(dataProviderClass = TriangleDataProvider.class, dataProvider = "nonExistentTriangles")
     @SneakyThrows
